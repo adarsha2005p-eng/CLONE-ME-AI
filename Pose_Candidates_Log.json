@@ -1,0 +1,110 @@
+[
+  {
+    "candidate": 1,
+    "tag": "C1",
+    "seed": 112233,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7713,
+    "face_bbox": [
+      197,
+      135,
+      470,
+      492
+    ],
+    "face_height_ratio": 0.3099,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Pose_Candidate_00001_.png",
+    "elapsed_sec": 30.22
+  },
+  {
+    "candidate": 2,
+    "tag": "C2",
+    "seed": 223344,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.48,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7193,
+    "face_bbox": [
+      332,
+      81,
+      524,
+      337
+    ],
+    "face_height_ratio": 0.2222,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Pose_Candidate_00002_.png",
+    "elapsed_sec": 38.18
+  },
+  {
+    "candidate": 3,
+    "tag": "C3",
+    "seed": 334455,
+    "faceid_weight": 1.22,
+    "faceid_v2_weight": 1.52,
+    "lora_strength": 0.85,
+    "similarity_score": 0.6806,
+    "face_bbox": [
+      378,
+      150,
+      662,
+      544
+    ],
+    "face_height_ratio": 0.342,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Pose_Candidate_00003_.png",
+    "elapsed_sec": 38.11
+  },
+  {
+    "candidate": 4,
+    "tag": "C4",
+    "seed": 445566,
+    "faceid_weight": 1.25,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity_score": 0.6624,
+    "face_bbox": [
+      311,
+      148,
+      582,
+      478
+    ],
+    "face_height_ratio": 0.2865,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Pose_Candidate_00004_.png",
+    "elapsed_sec": 38.29
+  },
+  {
+    "candidate": 5,
+    "tag": "C5",
+    "seed": 889900,
+    "faceid_weight": 1.18,
+    "faceid_v2_weight": 1.48,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7323,
+    "face_bbox": [
+      190,
+      134,
+      456,
+      475
+    ],
+    "face_height_ratio": 0.296,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Pose_Candidate_00005_.png",
+    "elapsed_sec": 38.12
+  },
+  {
+    "candidate": 6,
+    "tag": "C6",
+    "seed": 991122,
+    "faceid_weight": 1.25,
+    "faceid_v2_weight": 1.55,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7572,
+    "face_bbox": [
+      243,
+      167,
+      490,
+      498
+    ],
+    "face_height_ratio": 0.2873,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Pose_Candidate_00006_.png",
+    "elapsed_sec": 38.1
+  }
+]

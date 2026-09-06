@@ -1,0 +1,207 @@
+{
+  "stage1_workflow": {
+    "1": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {
+        "ckpt_name": "RealVisXL_V5_Lightning_Native_FP8_00001_.safetensors"
+      }
+    },
+    "2": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "WhatsApp Image 2026-08-24 at 2.23.05 PM.jpeg",
+        "upload": "image"
+      }
+    },
+    "3": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "pose_target_D.png",
+        "upload": "image"
+      }
+    },
+    "15": {
+      "class_type": "CLIPVisionLoader",
+      "inputs": {
+        "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+      }
+    },
+    "16": {
+      "class_type": "IPAdapterInsightFaceLoader",
+      "inputs": {
+        "provider": "CPU"
+      }
+    },
+    "4": {
+      "class_type": "IPAdapterUnifiedLoaderFaceID",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "preset": "FACEID PLUS V2",
+        "lora_strength": 0.85,
+        "provider": "CPU"
+      }
+    },
+    "5": {
+      "class_type": "IPAdapterFaceID",
+      "inputs": {
+        "model": [
+          "4",
+          0
+        ],
+        "ipadapter": [
+          "4",
+          1
+        ],
+        "image": [
+          "2",
+          0
+        ],
+        "clip_vision": [
+          "15",
+          0
+        ],
+        "insightface": [
+          "16",
+          0
+        ],
+        "weight": 1.25,
+        "weight_faceidv2": 1.5,
+        "weight_type": "linear",
+        "combine_embeds": "concat",
+        "start_at": 0.0,
+        "end_at": 1.0,
+        "embeds_scaling": "V only"
+      }
+    },
+    "6": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "1",
+          1
+        ],
+        "text": "photorealistic portrait photograph of a young woman, identical facial identity to the reference, same natural arched dark thick eyebrows with clear individual hair strokes, same almond-shaped dark brown eyes with natural crease, same medium nose with rounded tip, same full lips with defined shape, same oval face with defined cheekbones, same natural dark curly shoulder-length hair, same medium-light warm brown skin tone, wearing white fitted ribbed crop top and blue straight-leg denim jeans, natural relaxed standing pose, 3/4 body composition showing head to mid-thigh, natural shoulder placement with correct anatomy, anatomically correct proportions and realistic limbs, natural arm and hand positions, realistic female body with natural waist-to-hip ratio, indoor bedroom setting with soft warm natural light from window, photorealistic skin texture, pores, subsurface scattering, professional DSLR portrait, sharp focus, 8k resolution"
+      }
+    },
+    "7": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "1",
+          1
+        ],
+        "text": "different person, changed face identity, different face, missing eyebrows, no eyebrows, invisible eyebrows, faded eyebrows, overdrawn eyebrows, drawn-on eyebrows, unnatural brows, different eyes, wrong eye color, asymmetrical eyes, different nose, different lips, different face shape, deformed body, malformed body, distorted torso, twisted torso, broken shoulders, dislocated shoulders, impossible shoulder width, extra limbs, missing limbs, extra arms, broken arms, floating arms, deformed hands, extra fingers, missing fingers, fused fingers, melted hands, claw hands, blob hands, distorted hips, unnatural waist, extreme hourglass, mannequin body, plastic body, AI-generated body, doll proportions, wrong clothing, black shirt, dark top, different outfit, dress, skirt, cartoon, anime, illustration, CGI, 3D render, painting, plastic skin, waxy skin, overly smooth skin, blurry, low quality, jpeg artifacts, watermark, text, signature, bad proportions, wrong anatomy, impossible pose, duplicate face, multiple people, two faces"
+      }
+    },
+    "17": {
+      "class_type": "ControlNetLoader",
+      "inputs": {
+        "control_net_name": "thibaud_xl_openpose.safetensors"
+      }
+    },
+    "18": {
+      "class_type": "ControlNetApplyAdvanced",
+      "inputs": {
+        "positive": [
+          "6",
+          0
+        ],
+        "negative": [
+          "7",
+          0
+        ],
+        "control_net": [
+          "17",
+          0
+        ],
+        "image": [
+          "3",
+          0
+        ],
+        "strength": 0.55,
+        "start_percent": 0.0,
+        "end_percent": 1.0
+      }
+    },
+    "8": {
+      "class_type": "EmptyLatentImage",
+      "inputs": {
+        "width": 832,
+        "height": 1152,
+        "batch_size": 1
+      }
+    },
+    "10": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": [
+          "5",
+          0
+        ],
+        "positive": [
+          "18",
+          0
+        ],
+        "negative": [
+          "18",
+          1
+        ],
+        "latent_image": [
+          "8",
+          0
+        ],
+        "seed": 81353482,
+        "control_after_generate": "fixed",
+        "steps": 20,
+        "cfg": 5.5,
+        "sampler_name": "euler_ancestral",
+        "scheduler": "karras",
+        "denoise": 1.0
+      }
+    },
+    "11": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "10",
+          0
+        ],
+        "vae": [
+          "1",
+          2
+        ]
+      }
+    },
+    "12": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "11",
+          0
+        ],
+        "filename_prefix": "REALISTIC_IDENTITY_BODY_S1_C00"
+      }
+    }
+  },
+  "stage2_params": {
+    "denoise": 0.35,
+    "steps": 12,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras",
+    "cfg": 7.0
+  },
+  "best_params": {
+    "cnet": 0.55,
+    "faceid": 1.25,
+    "faceidv2": 1.5,
+    "lora": 0.85,
+    "s2_denoise": 0.35,
+    "s2_steps": 12,
+    "seed1": 81353482,
+    "seed2": 42733143
+  },
+  "note": "Stage 1 runs first, then Stage 2 uses output as input image."
+}

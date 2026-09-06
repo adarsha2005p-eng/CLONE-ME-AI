@@ -1,0 +1,38 @@
+[
+  {
+    "candidate": "Candidate 1",
+    "output_file": "OpenPose_Test_01.png",
+    "openpose_strength": 0.65,
+    "seed": 666666,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity": 0.6867,
+    "bbox": [
+      293,
+      105,
+      464,
+      341
+    ],
+    "face_height_ratio": 0.2049,
+    "elapsed_sec": 74.13
+  },
+  {
+    "candidate": "Candidate 2",
+    "output_file": "OpenPose_Test_02.png",
+    "openpose_strength": 0.8,
+    "seed": 777777,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity": 0.6217,
+    "bbox": [
+      324,
+      56,
+      453,
+      237
+    ],
+    "face_height_ratio": 0.1571,
+    "elapsed_sec": 42.05
+  }
+]

@@ -1,0 +1,202 @@
+[
+  {
+    "candidate": 1,
+    "seed": 444444,
+    "denoise": 0.32,
+    "faceid_weight": 1.15,
+    "faceid_v2_weight": 1.45,
+    "lora_strength": 0.8,
+    "similarity_score": 0.766,
+    "face_bbox": [
+      317,
+      299,
+      526,
+      571
+    ],
+    "face_height_ratio": 0.2361,
+    "blue_jeans_metric": 0.0011,
+    "white_top_metric": 0.0002,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00001_.png",
+    "elapsed_sec": 30.14
+  },
+  {
+    "candidate": 2,
+    "seed": 444444,
+    "denoise": 0.36,
+    "faceid_weight": 1.15,
+    "faceid_v2_weight": 1.45,
+    "lora_strength": 0.8,
+    "similarity_score": 0.7403,
+    "face_bbox": [
+      316,
+      300,
+      526,
+      571
+    ],
+    "face_height_ratio": 0.2352,
+    "blue_jeans_metric": 0.0015,
+    "white_top_metric": 0.001,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00002_.png",
+    "elapsed_sec": 26.16
+  },
+  {
+    "candidate": 3,
+    "seed": 444444,
+    "denoise": 0.4,
+    "faceid_weight": 1.15,
+    "faceid_v2_weight": 1.45,
+    "lora_strength": 0.8,
+    "similarity_score": 0.7585,
+    "face_bbox": [
+      316,
+      299,
+      526,
+      571
+    ],
+    "face_height_ratio": 0.2361,
+    "blue_jeans_metric": 0.0015,
+    "white_top_metric": 0.0012,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00003_.png",
+    "elapsed_sec": 26.18
+  },
+  {
+    "candidate": 4,
+    "seed": 444444,
+    "denoise": 0.44,
+    "faceid_weight": 1.15,
+    "faceid_v2_weight": 1.45,
+    "lora_strength": 0.8,
+    "similarity_score": 0.7284,
+    "face_bbox": [
+      315,
+      301,
+      526,
+      571
+    ],
+    "face_height_ratio": 0.2344,
+    "blue_jeans_metric": 0.0015,
+    "white_top_metric": 0.0014,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00004_.png",
+    "elapsed_sec": 26.54
+  },
+  {
+    "candidate": 5,
+    "seed": 777777,
+    "denoise": 0.36,
+    "faceid_weight": 1.15,
+    "faceid_v2_weight": 1.45,
+    "lora_strength": 0.8,
+    "similarity_score": 0.7686,
+    "face_bbox": [
+      317,
+      299,
+      526,
+      570
+    ],
+    "face_height_ratio": 0.2352,
+    "blue_jeans_metric": 0.0003,
+    "white_top_metric": 0.0005,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00005_.png",
+    "elapsed_sec": 26.15
+  },
+  {
+    "candidate": 6,
+    "seed": 777777,
+    "denoise": 0.4,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7638,
+    "face_bbox": [
+      317,
+      297,
+      526,
+      572
+    ],
+    "face_height_ratio": 0.2387,
+    "blue_jeans_metric": 0.0009,
+    "white_top_metric": 0.0004,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00006_.png",
+    "elapsed_sec": 38.18
+  },
+  {
+    "candidate": 7,
+    "seed": 112233,
+    "denoise": 0.36,
+    "faceid_weight": 1.15,
+    "faceid_v2_weight": 1.45,
+    "lora_strength": 0.8,
+    "similarity_score": 0.7168,
+    "face_bbox": [
+      318,
+      301,
+      526,
+      573
+    ],
+    "face_height_ratio": 0.2361,
+    "blue_jeans_metric": 0.0008,
+    "white_top_metric": 0.0004,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00007_.png",
+    "elapsed_sec": 38.09
+  },
+  {
+    "candidate": 8,
+    "seed": 112233,
+    "denoise": 0.4,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7081,
+    "face_bbox": [
+      317,
+      301,
+      526,
+      574
+    ],
+    "face_height_ratio": 0.237,
+    "blue_jeans_metric": 0.0019,
+    "white_top_metric": 0.0004,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00008_.png",
+    "elapsed_sec": 38.18
+  },
+  {
+    "candidate": 9,
+    "seed": 424242,
+    "denoise": 0.38,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity_score": 0.724,
+    "face_bbox": [
+      316,
+      298,
+      528,
+      568
+    ],
+    "face_height_ratio": 0.2344,
+    "blue_jeans_metric": 0.0007,
+    "white_top_metric": 0.0002,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00009_.png",
+    "elapsed_sec": 26.25
+  },
+  {
+    "candidate": 10,
+    "seed": 424242,
+    "denoise": 0.42,
+    "faceid_weight": 1.2,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "similarity_score": 0.7256,
+    "face_bbox": [
+      315,
+      297,
+      528,
+      569
+    ],
+    "face_height_ratio": 0.2361,
+    "blue_jeans_metric": 0.0007,
+    "white_top_metric": 0.0002,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\PoseChange_Candidate_00010_.png",
+    "elapsed_sec": 26.08
+  }
+]

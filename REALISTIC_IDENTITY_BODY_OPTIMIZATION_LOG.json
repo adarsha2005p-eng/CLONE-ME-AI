@@ -1,0 +1,164 @@
+{
+  "timestamp": "2026-09-06T00:16:38",
+  "reference": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\input\\WhatsApp Image 2026-08-24 at 2.23.05 PM.jpeg",
+  "architecture": "separate_api_two_stage_v3",
+  "best_score": 71.62,
+  "best_params": {
+    "cnet": 0.55,
+    "faceid": 1.25,
+    "faceidv2": 1.5,
+    "lora": 0.85,
+    "s2_denoise": 0.35,
+    "s2_steps": 12,
+    "seed1": 81353482,
+    "seed2": 42733143
+  },
+  "best_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C03_00001_.png",
+  "final_result": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\FINAL_REALISTIC_IDENTITY_BODY_RESULT.png",
+  "candidates": [
+    {
+      "candidate": 1,
+      "params": {
+        "cnet": 0.6,
+        "faceid": 1.2,
+        "faceidv2": 1.45,
+        "lora": 0.85,
+        "s2_denoise": 0.3,
+        "s2_steps": 10,
+        "seed1": 32328493,
+        "seed2": 61890963
+      },
+      "similarity": 0.7028270959854126,
+      "anatomy": 16.0,
+      "score": 71.25,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C01_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C01_00001_.png"
+    },
+    {
+      "candidate": 2,
+      "params": {
+        "cnet": 0.65,
+        "faceid": 1.25,
+        "faceidv2": 1.5,
+        "lora": 0.85,
+        "s2_denoise": 0.35,
+        "s2_steps": 10,
+        "seed1": 61766353,
+        "seed2": 87512275
+      },
+      "similarity": 0.7088682651519775,
+      "anatomy": 16.0,
+      "score": 71.57,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C02_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C02_00001_.png"
+    },
+    {
+      "candidate": 3,
+      "params": {
+        "cnet": 0.55,
+        "faceid": 1.25,
+        "faceidv2": 1.5,
+        "lora": 0.85,
+        "s2_denoise": 0.35,
+        "s2_steps": 12,
+        "seed1": 81353482,
+        "seed2": 42733143
+      },
+      "similarity": 0.7098913788795471,
+      "anatomy": 16.0,
+      "score": 71.62,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C03_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C03_00001_.png"
+    },
+    {
+      "candidate": 4,
+      "params": {
+        "cnet": 0.65,
+        "faceid": 1.3,
+        "faceidv2": 1.55,
+        "lora": 0.88,
+        "s2_denoise": 0.3,
+        "s2_steps": 10,
+        "seed1": 22086827,
+        "seed2": 96871281
+      },
+      "similarity": 0.6980723738670349,
+      "anatomy": 16.0,
+      "score": 71.0,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C04_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C04_00001_.png"
+    },
+    {
+      "candidate": 5,
+      "params": {
+        "cnet": 0.6,
+        "faceid": 1.2,
+        "faceidv2": 1.45,
+        "lora": 0.82,
+        "s2_denoise": 0.4,
+        "s2_steps": 12,
+        "seed1": 32924338,
+        "seed2": 88134640
+      },
+      "similarity": 0.6826596260070801,
+      "anatomy": 16.0,
+      "score": 70.18,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C05_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C05_00001_.png"
+    },
+    {
+      "candidate": 6,
+      "params": {
+        "cnet": 0.7,
+        "faceid": 1.25,
+        "faceidv2": 1.5,
+        "lora": 0.85,
+        "s2_denoise": 0.3,
+        "s2_steps": 10,
+        "seed1": 69555416,
+        "seed2": 98411600
+      },
+      "similarity": 0.7082246541976929,
+      "anatomy": 16.0,
+      "score": 71.54,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C06_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C06_00001_.png"
+    },
+    {
+      "candidate": 7,
+      "params": {
+        "cnet": 0.6,
+        "faceid": 1.25,
+        "faceidv2": 1.48,
+        "lora": 0.87,
+        "s2_denoise": 0.35,
+        "s2_steps": 14,
+        "seed1": 62456052,
+        "seed2": 48562782
+      },
+      "similarity": 0.6871572732925415,
+      "anatomy": 16.0,
+      "score": 70.42,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C07_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C07_00001_.png"
+    },
+    {
+      "candidate": 8,
+      "params": {
+        "cnet": 0.65,
+        "faceid": 1.28,
+        "faceidv2": 1.52,
+        "lora": 0.86,
+        "s2_denoise": 0.33,
+        "s2_steps": 11,
+        "seed1": 75843870,
+        "seed2": 14479272
+      },
+      "similarity": 0.6844983100891113,
+      "anatomy": 16.0,
+      "score": 70.28,
+      "stage1_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S1_C08_00001_.png",
+      "final_file": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\REALISTIC_IDENTITY_BODY_S2_C08_00001_.png"
+    }
+  ]
+}

@@ -1,0 +1,837 @@
+{
+  "last_node_id": 55,
+  "last_link_id": 550,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        40,
+        100
+      ],
+      "size": {
+        "0": 340,
+        "1": 98
+      },
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2,
+            3
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            5
+          ],
+          "slot_index": 2
+        }
+      ],
+      "widgets_values": [
+        "RealVisXL_V5_Lightning_Native_FP8_00001_.safetensors"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        260
+      ],
+      "size": {
+        "0": 340,
+        "1": 300
+      },
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "WhatsApp Image 2026-08-24 at 2.23.05 PM.jpeg",
+        "image"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        600
+      ],
+      "size": {
+        "0": 340,
+        "1": 300
+      },
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "ref_face_tight.png",
+        "image"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        40,
+        940
+      ],
+      "size": {
+        "0": 340,
+        "1": 90
+      },
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "links": [
+            151,
+            152
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "IPAdapterInsightFaceLoader",
+      "pos": [
+        40,
+        1080
+      ],
+      "size": {
+        "0": 340,
+        "1": 90
+      },
+      "outputs": [
+        {
+          "name": "INSIGHTFACE",
+          "type": "INSIGHTFACE",
+          "links": [
+            161,
+            162
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "CPU"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "IPAdapterUnifiedLoaderFaceID",
+      "pos": [
+        440,
+        100
+      ],
+      "size": {
+        "0": 340,
+        "1": 120
+      },
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            41
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "IPADAPTER",
+          "type": "IPADAPTER",
+          "links": [
+            42,
+            43
+          ],
+          "slot_index": 1
+        }
+      ],
+      "widgets_values": [
+        "FACEID PLUS V2",
+        0.88,
+        "CPU"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "IPAdapterFaceID",
+      "pos": [
+        440,
+        280
+      ],
+      "size": {
+        "0": 340,
+        "1": 280
+      },
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 41
+        },
+        {
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "link": 42
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 6
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 151
+        },
+        {
+          "name": "insightface",
+          "type": "INSIGHTFACE",
+          "link": 161
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            51
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "widgets_values": [
+        0.7,
+        0.9,
+        "linear",
+        "concat",
+        0.0,
+        1.0,
+        "V only"
+      ]
+    },
+    {
+      "id": 52,
+      "type": "IPAdapterFaceID",
+      "pos": [
+        440,
+        600
+      ],
+      "size": {
+        "0": 340,
+        "1": 280
+      },
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 51
+        },
+        {
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "link": 43
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 152
+        },
+        {
+          "name": "insightface",
+          "type": "INSIGHTFACE",
+          "link": 162
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            521
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "widgets_values": [
+        0.6,
+        0.75,
+        "linear",
+        "concat",
+        0.0,
+        1.0,
+        "V only"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        840,
+        100
+      ],
+      "size": {
+        "0": 380,
+        "1": 180
+      },
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            61
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "photorealistic full-body photograph of the same woman from the reference photographs, highly accurate facial identity, natural recognizable face, accurate eyes, eyebrows, nose, lips, cheeks and jawline, realistic skin texture, natural hair, realistic human anatomy, anatomically correct shoulders arms elbows wrists hands fingers torso waist hips legs knees and feet, natural standing 3/4 pose, relaxed natural posture, one arm relaxed and the other naturally resting near the waist, white ribbed crop top, blue jeans, realistic clothing fit and fabric texture, natural indoor bedroom lighting, realistic camera perspective, subtle skin imperfections, professional DSLR photography, physically plausible proportions, highly detailed, natural photographic realism"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        840,
+        320
+      ],
+      "size": {
+        "0": 380,
+        "1": 180
+      },
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            71
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "cartoon, anime, CGI, plastic skin, beauty filter, different person, altered identity, wrong face, asymmetrical eyes, missing eyebrows, distorted eyebrows, deformed face, bad anatomy, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, missing limbs, oversized arms, elongated arms, broken elbows, warped shoulders, distorted torso, unrealistic waist, distorted hips, deformed legs, bad feet, cropped feet, duplicate body parts, blurry, low quality, oversharpened, artificial skin, uncanny, doll-like"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "ControlNetLoader",
+      "pos": [
+        840,
+        540
+      ],
+      "size": {
+        "0": 380,
+        "1": 90
+      },
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            171
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "thibaud_xl_openpose.safetensors"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        840,
+        680
+      ],
+      "size": {
+        "0": 380,
+        "1": 300
+      },
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            31
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        "standing_3_4_openpose_target.png",
+        "image"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "ControlNetApplyAdvanced",
+      "pos": [
+        1260,
+        100
+      ],
+      "size": {
+        "0": 330,
+        "1": 220
+      },
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 61
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 71
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 171
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            181
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            182
+          ],
+          "slot_index": 1
+        }
+      ],
+      "widgets_values": [
+        0.7,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": 8,
+      "type": "EmptyLatentImage",
+      "pos": [
+        1260,
+        380
+      ],
+      "size": {
+        "0": 330,
+        "1": 100
+      },
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            81
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        832,
+        1152,
+        1
+      ]
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [
+        1640,
+        200
+      ],
+      "size": {
+        "0": 340,
+        "1": 260
+      },
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 521
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 181
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 182
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 81
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            101
+          ],
+          "slot_index": 0
+        }
+      ],
+      "widgets_values": [
+        80123812,
+        "fixed",
+        8,
+        2.0,
+        "dpmpp_sde",
+        "sgm_uniform",
+        1.0
+      ]
+    },
+    {
+      "id": 11,
+      "type": "VAEDecode",
+      "pos": [
+        2020,
+        200
+      ],
+      "size": {
+        "0": 210,
+        "1": 60
+      },
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 101
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            111
+          ],
+          "slot_index": 0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "SaveImage",
+      "pos": [
+        2280,
+        200
+      ],
+      "size": {
+        "0": 340,
+        "1": 400
+      },
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 111
+        }
+      ],
+      "widgets_values": [
+        "FINAL_MULTIREFERENCE_REALISTIC_RESULT"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      1,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      1,
+      2,
+      11,
+      1,
+      "VAE"
+    ],
+    [
+      6,
+      2,
+      0,
+      5,
+      2,
+      "IMAGE"
+    ],
+    [
+      7,
+      22,
+      0,
+      52,
+      2,
+      "IMAGE"
+    ],
+    [
+      151,
+      15,
+      0,
+      5,
+      5,
+      "CLIP_VISION"
+    ],
+    [
+      152,
+      15,
+      0,
+      52,
+      5,
+      "CLIP_VISION"
+    ],
+    [
+      161,
+      16,
+      0,
+      5,
+      6,
+      "INSIGHTFACE"
+    ],
+    [
+      162,
+      16,
+      0,
+      52,
+      6,
+      "INSIGHTFACE"
+    ],
+    [
+      41,
+      4,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      42,
+      4,
+      1,
+      5,
+      1,
+      "IPADAPTER"
+    ],
+    [
+      43,
+      4,
+      1,
+      52,
+      1,
+      "IPADAPTER"
+    ],
+    [
+      51,
+      5,
+      0,
+      52,
+      0,
+      "MODEL"
+    ],
+    [
+      521,
+      52,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      61,
+      6,
+      0,
+      18,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      71,
+      7,
+      0,
+      18,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      171,
+      17,
+      0,
+      18,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      31,
+      3,
+      0,
+      18,
+      3,
+      "IMAGE"
+    ],
+    [
+      181,
+      18,
+      0,
+      10,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      182,
+      18,
+      1,
+      10,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      81,
+      8,
+      0,
+      10,
+      3,
+      "LATENT"
+    ],
+    [
+      101,
+      10,
+      0,
+      11,
+      0,
+      "LATENT"
+    ],
+    [
+      111,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        0,
+        0
+      ]
+    }
+  },
+  "version": 0.4
+}

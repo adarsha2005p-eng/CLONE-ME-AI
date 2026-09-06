@@ -1,0 +1,162 @@
+{
+  "timestamp": "2026-09-05 22:35:44",
+  "best_candidate_id": 4,
+  "best_score": 93.63,
+  "best_candidate_settings": {
+    "candidate_id": 4,
+    "description": "Pose D (hand on waist), CNet 0.75, seed 112233",
+    "pose_target": "pose_target_D.png",
+    "cnet_strength": 0.75,
+    "seed": 112233,
+    "faceid_weight": 1.25,
+    "faceid_v2_weight": 1.5,
+    "lora_strength": 0.85,
+    "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Prod_Candidate_04_00001_.png",
+    "face_detected": true,
+    "cosine_similarity": 0.7613,
+    "face_bbox": [
+      259,
+      170,
+      510,
+      505
+    ],
+    "face_height_ratio": 0.2908,
+    "total_weighted_score": 93.63,
+    "score_breakdown": {
+      "identity_35": 31.13,
+      "eyebrows_eyes_20": 20.0,
+      "pose_15": 15.0,
+      "clothing_10": 8.5,
+      "face_struct_10": 10.0,
+      "anatomy_5": 4.5,
+      "photorealism_5": 4.5
+    },
+    "elapsed_seconds": 52.44
+  },
+  "all_candidates": [
+    {
+      "candidate_id": 1,
+      "description": "Pose A (hand near waist), CNet 0.80, seed 777777",
+      "pose_target": "pose_target_A.png",
+      "cnet_strength": 0.8,
+      "seed": 777777,
+      "faceid_weight": 1.2,
+      "faceid_v2_weight": 1.5,
+      "lora_strength": 0.85,
+      "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Prod_Candidate_01_00001_.png",
+      "face_detected": true,
+      "cosine_similarity": 0.5804,
+      "face_bbox": [
+        320,
+        52,
+        447,
+        232
+      ],
+      "face_height_ratio": 0.1562,
+      "total_weighted_score": 74.04,
+      "score_breakdown": {
+        "identity_35": 13.04,
+        "eyebrows_eyes_20": 20.0,
+        "pose_15": 12.0,
+        "clothing_10": 10.0,
+        "face_struct_10": 10.0,
+        "anatomy_5": 4.5,
+        "photorealism_5": 4.5
+      },
+      "elapsed_seconds": 48.08
+    },
+    {
+      "candidate_id": 2,
+      "description": "Pose A (hand near waist), CNet 0.75, seed 112233",
+      "pose_target": "pose_target_A.png",
+      "cnet_strength": 0.75,
+      "seed": 112233,
+      "faceid_weight": 1.2,
+      "faceid_v2_weight": 1.5,
+      "lora_strength": 0.85,
+      "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Prod_Candidate_02_00001_.png",
+      "face_detected": true,
+      "cosine_similarity": 0.6571,
+      "face_bbox": [
+        297,
+        184,
+        588,
+        591
+      ],
+      "face_height_ratio": 0.3533,
+      "total_weighted_score": 78.71,
+      "score_breakdown": {
+        "identity_35": 20.71,
+        "eyebrows_eyes_20": 20.0,
+        "pose_15": 12.0,
+        "clothing_10": 7.0,
+        "face_struct_10": 10.0,
+        "anatomy_5": 4.5,
+        "photorealism_5": 4.5
+      },
+      "elapsed_seconds": 44.04
+    },
+    {
+      "candidate_id": 3,
+      "description": "Pose D (hand on waist), CNet 0.80, seed 777777",
+      "pose_target": "pose_target_D.png",
+      "cnet_strength": 0.8,
+      "seed": 777777,
+      "faceid_weight": 1.2,
+      "faceid_v2_weight": 1.5,
+      "lora_strength": 0.85,
+      "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Prod_Candidate_03_00001_.png",
+      "face_detected": true,
+      "cosine_similarity": 0.5945,
+      "face_bbox": [
+        319,
+        52,
+        449,
+        235
+      ],
+      "face_height_ratio": 0.1589,
+      "total_weighted_score": 75.45,
+      "score_breakdown": {
+        "identity_35": 14.45,
+        "eyebrows_eyes_20": 20.0,
+        "pose_15": 12.0,
+        "clothing_10": 10.0,
+        "face_struct_10": 10.0,
+        "anatomy_5": 4.5,
+        "photorealism_5": 4.5
+      },
+      "elapsed_seconds": 44.06
+    },
+    {
+      "candidate_id": 4,
+      "description": "Pose D (hand on waist), CNet 0.75, seed 112233",
+      "pose_target": "pose_target_D.png",
+      "cnet_strength": 0.75,
+      "seed": 112233,
+      "faceid_weight": 1.25,
+      "faceid_v2_weight": 1.5,
+      "lora_strength": 0.85,
+      "image_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\Prod_Candidate_04_00001_.png",
+      "face_detected": true,
+      "cosine_similarity": 0.7613,
+      "face_bbox": [
+        259,
+        170,
+        510,
+        505
+      ],
+      "face_height_ratio": 0.2908,
+      "total_weighted_score": 93.63,
+      "score_breakdown": {
+        "identity_35": 31.13,
+        "eyebrows_eyes_20": 20.0,
+        "pose_15": 15.0,
+        "clothing_10": 8.5,
+        "face_struct_10": 10.0,
+        "anatomy_5": 4.5,
+        "photorealism_5": 4.5
+      },
+      "elapsed_seconds": 52.44
+    }
+  ]
+}

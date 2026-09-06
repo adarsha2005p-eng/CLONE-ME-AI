@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-09-06T00:43:00",
+  "hardware": "RTX 3050 Laptop GPU 6GB",
+  "references": {
+    "FACE_PRIMARY": "WhatsApp Image 2026-08-24 at 2.23.05 PM.jpeg",
+    "FACE_SUPPORTING_TIGHT": "ref_face_tight.png",
+    "UPPER_BODY_HAIR": "ref_upper_bust.png",
+    "POSE_TARGET": "standing_3_4_openpose_target.png",
+    "missing_chatgpt_uploads": "Additional angle, expression, and full-body originals were not stored on local disk."
+  },
+  "best_candidate": "C02_Enhanced_Eyebrow_Lock",
+  "best_score": 83.46,
+  "best_similarity": 0.6812,
+  "best_parameters": {
+    "seed": 80123812,
+    "cnet": 0.7,
+    "w_prim": 0.7,
+    "w_prim_v2": 0.9,
+    "w_tight": 0.6,
+    "w_tight_v2": 0.75,
+    "lora": 0.88,
+    "s1_steps": 8,
+    "s1_cfg": 2.0,
+    "positive": "photorealistic full-body photograph of the same woman from the reference photographs, highly accurate facial identity, natural recognizable face, accurate eyes, eyebrows, nose, lips, cheeks and jawline, realistic skin texture, natural hair, realistic human anatomy, anatomically correct shoulders arms elbows wrists hands fingers torso waist hips legs knees and feet, natural standing 3/4 pose, relaxed natural posture, one arm relaxed and the other naturally resting near the waist, white ribbed crop top, blue jeans, realistic clothing fit and fabric texture, natural indoor bedroom lighting, realistic camera perspective, subtle skin imperfections, professional DSLR photography, physically plausible proportions, highly detailed, natural photographic realism",
+    "negative": "cartoon, anime, CGI, plastic skin, beauty filter, different person, altered identity, wrong face, asymmetrical eyes, missing eyebrows, distorted eyebrows, deformed face, bad anatomy, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, missing limbs, oversized arms, elongated arms, broken elbows, warped shoulders, distorted torso, unrealistic waist, distorted hips, deformed legs, bad feet, cropped feet, duplicate body parts, blurry, low quality, oversharpened, artificial skin, uncanny, doll-like"
+  },
+  "final_output_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\FINAL_MULTIREFERENCE_REALISTIC_RESULT.png",
+  "master_workflow_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\SDXL_MultiReference_Realistic_Identity_MASTER.json",
+  "candidate_summary": [
+    {
+      "name": "C01_Balanced_MultiRef",
+      "score": 77.6,
+      "sim": 0.551,
+      "anatomy": "20.0/20"
+    },
+    {
+      "name": "C02_Enhanced_Eyebrow_Lock",
+      "score": 83.46,
+      "sim": 0.6812,
+      "anatomy": "20.0/20",
+      "winner": true
+    },
+    {
+      "name": "C03_High_Identity_TenSteps",
+      "score": 81.69,
+      "sim": 0.6419,
+      "anatomy": "20.0/20"
+    },
+    {
+      "name": "C04_Firm_Pose_Control",
+      "score": 77.38,
+      "sim": 0.5463,
+      "anatomy": "20.0/20"
+    },
+    {
+      "name": "C05_Max_Preservation",
+      "score": 79.12,
+      "sim": 0.5848,
+      "anatomy": "20.0/20"
+    }
+  ]
+}

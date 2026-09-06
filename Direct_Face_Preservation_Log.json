@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-09-06T19:15:00",
+  "strategy": "Image-Editing / Inpainting-First Direct Face Preservation",
+  "comparison_to_previous": {
+    "previous_empty_latent_faceid_similarity": 0.6812,
+    "new_direct_face_preservation_similarity": 0.8757,
+    "improvement": "+0.1945 InsightFace cosine similarity gain (+28.5%)",
+    "key_difference": "Original face pixels and features are directly preserved and harmonized rather than hallucinated from Gaussian noise."
+  },
+  "reference_image": "WhatsApp Image 2026-08-24 at 2.23.05 PM.jpeg",
+  "base_canvas": "inpaint_base_canvas.png",
+  "face_protection_mask": "inpaint_face_protect_mask.png",
+  "openpose_target": "standing_3_4_openpose_target.png",
+  "master_workflow_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\SDXL_DirectFacePreservation_Edit_MASTER.json",
+  "test_output_path": "E:\\ComfyUI_windows_portable_nvidia\\ComfyUI_windows_portable\\ComfyUI\\output\\DIRECT_FACE_PRESERVATION_TEST.png",
+  "metrics": {
+    "insightface_cosine_similarity": 0.8757,
+    "det_score": 0.83,
+    "resolution": "832x1152",
+    "framing": "Full-body standing 3/4 composition",
+    "clothing": "White ribbed crop top and blue jeans",
+    "anatomy_integrity": "PASSED (valid human proportions from OpenPose skeleton)"
+  }
+}
