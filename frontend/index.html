@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLONE-ME-AI — Identity-Preserved AI Image Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#090d16] text-gray-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-gray-800/80 bg-gray-950/60 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-indigo-300">
+                        CLONE-ME-AI
+                    </h1>
+                    <p class="text-xs text-gray-400 font-medium">Direct Face Preservation Studio</p>
+                </div>
+            </div>
+
+            <!-- Health status & Links -->
+            <div class="flex items-center gap-4">
+                <div id="comfy-status-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-gray-800/80 border border-gray-700 text-gray-300">
+                    <span id="comfy-status-dot" class="w-2 h-2 rounded-full bg-gray-400"></span>
+                    <span id="comfy-status-text">Checking ComfyUI...</span>
+                </div>
+                <a href="https://github.com/adarsha2005p-eng/CLONE-ME-AI" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Column: Controls & Upload (5 Cols) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Upload Reference Card -->
+                <div class="glass-panel rounded-2xl p-5 shadow-xl">
+                    <label class="block text-sm font-semibold text-gray-200 mb-2 flex items-center justify-between">
+                        <span>1. Reference Photo</span>
+                        <span class="text-xs text-indigo-400 font-normal">Original Identity Source</span>
+                    </label>
+
+                    <!-- Dropzone -->
+                    <div id="dropzone" class="dropzone relative border-2 border-dashed border-gray-700 hover:border-indigo-500/80 rounded-xl p-6 text-center cursor-pointer transition-all duration-200 bg-gray-900/40">
+                        <input type="file" id="file-input" accept="image/*" class="hidden">
+                        
+                        <!-- Empty Upload State -->
+                        <div id="upload-prompt-container" class="space-y-3">
+                            <div class="mx-auto w-12 h-12 rounded-full bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-300">Click or drag & drop photo here</p>
+                                <p class="text-xs text-gray-500 mt-1">Supports PNG, JPG, WEBP &bull; Paste from clipboard (Ctrl+V)</p>
+                            </div>
+                        </div>
+
+                        <!-- Uploaded Preview -->
+                        <div id="upload-preview-container" class="hidden relative">
+                            <img id="upload-preview-img" src="" alt="Reference Preview" class="max-h-64 mx-auto rounded-lg object-contain shadow-md border border-gray-700">
+                            <button id="remove-upload-btn" type="button" class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1.5 shadow-lg transition-colors" title="Remove photo">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prompt Presets & Custom Prompt -->
+                <div class="glass-panel rounded-2xl p-5 shadow-xl space-y-4">
+                    <label class="block text-sm font-semibold text-gray-200 flex items-center justify-between">
+                        <span>2. Pose & Clothing Prompt</span>
+                        <span class="text-xs text-gray-400">SDXL Inpaint Target</span>
+                    </label>
+
+                    <!-- Quick Preset Pills -->
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" data-preset="white-crop-top" class="preset-btn text-xs px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/80 hover:border-indigo-500 hover:bg-indigo-950/30 text-gray-300 transition-colors">
+                            🤍 White Crop Top + Jeans
+                        </button>
+                        <button type="button" data-preset="casual-blazer" class="preset-btn text-xs px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/80 hover:border-indigo-500 hover:bg-indigo-950/30 text-gray-300 transition-colors">
+                            💼 Smart Blazer & Denim
+                        </button>
+                        <button type="button" data-preset="summer-dress" class="preset-btn text-xs px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/80 hover:border-indigo-500 hover:bg-indigo-950/30 text-gray-300 transition-colors">
+                            🌸 Summer Sundress
+                        </button>
+                        <button type="button" data-preset="athletic-wear" class="preset-btn text-xs px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/80 hover:border-indigo-500 hover:bg-indigo-950/30 text-gray-300 transition-colors">
+                            🏋️ Gym Athletic Set
+                        </button>
+                    </div>
+
+                    <!-- Prompt Textarea -->
+                    <textarea id="prompt-input" rows="4" class="w-full rounded-xl bg-gray-900/70 border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm text-gray-200 p-3 leading-relaxed resize-y placeholder-gray-500">photorealistic photograph of the same woman from the original reference photograph, preserve the original facial identity exactly as closely as technically possible, natural recognizable face, accurate original eyes, original eyebrows, original nose, original lips, original cheeks, original jawline, natural skin texture, natural hair, realistic human anatomy, realistic body proportions, natural standing three-quarter pose, anatomically correct shoulders arms elbows wrists hands fingers torso waist hips legs knees and feet, wearing a white ribbed crop top and blue jeans, natural indoor lighting, realistic camera perspective, DSLR photography</textarea>
+
+                    <!-- Collapsible Negative Prompt -->
+                    <details class="group">
+                        <summary class="cursor-pointer text-xs font-semibold text-gray-400 hover:text-gray-300 flex items-center justify-between py-1">
+                            <span>Negative Prompt (Anti-Distortion)</span>
+                            <span class="group-open:rotate-180 transition-transform text-gray-500">&#9662;</span>
+                        </summary>
+                        <textarea id="neg-prompt-input" rows="3" class="mt-2 w-full rounded-xl bg-gray-900/70 border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-xs text-gray-400 p-3 leading-relaxed resize-y">different person, changed identity, different face, altered eyes, altered eyebrows, altered nose, altered lips, altered jaw, beauty filter, plastic skin, artificial face, cartoon, anime, CGI, doll-like, bad anatomy, oversized arms, elongated arms, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, warped torso, distorted shoulders, distorted waist, deformed legs, bad feet, cropped feet, unrealistic proportions, blurry, low quality</textarea>
+                    </details>
+
+                    <!-- Advanced Parameters -->
+                    <details class="group">
+                        <summary class="cursor-pointer text-xs font-semibold text-gray-400 hover:text-gray-300 flex items-center justify-between py-1">
+                            <span>Advanced Generation Settings</span>
+                            <span class="group-open:rotate-180 transition-transform text-gray-500">&#9662;</span>
+                        </summary>
+                        <div class="mt-3 space-y-4 pt-2 border-t border-gray-800">
+                            <div class="flex items-center justify-between">
+                                <label class="text-xs text-gray-400">Seed (-1 = Random)</label>
+                                <input type="number" id="seed-input" value="-1" class="w-32 rounded-lg bg-gray-900 border border-gray-700 text-xs text-gray-200 px-2.5 py-1 text-right">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-gray-400 mb-1">
+                                    <span>Steps (Lightning)</span>
+                                    <span id="steps-val" class="text-indigo-400 font-mono">12</span>
+                                </div>
+                                <input type="range" id="steps-input" min="8" max="20" value="12" step="1" class="slider-range">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-gray-400 mb-1">
+                                    <span>CFG Scale</span>
+                                    <span id="cfg-val" class="text-indigo-400 font-mono">2.0</span>
+                                </div>
+                                <input type="range" id="cfg-input" min="1.0" max="4.0" value="2.0" step="0.1" class="slider-range">
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Generate Button -->
+                <button id="generate-btn" disabled type="button" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-base shadow-lg shadow-indigo-600/30 transition-all duration-200 flex items-center justify-center gap-3 opacity-50 cursor-not-allowed">
+                    <svg id="generate-spinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span id="generate-btn-text">Generate Clone</span>
+                </button>
+            </div>
+
+            <!-- Right Column: Interactive Results & Comparison (7 Cols) -->
+            <div class="lg:col-span-7">
+                
+                <!-- Empty Initial State -->
+                <div id="empty-state" class="glass-panel rounded-2xl p-12 text-center shadow-xl border border-gray-800 flex flex-col items-center justify-center min-h-[560px]">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-indigo-950 to-purple-950 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6">
+                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-200">Identity Preservation Engine</h3>
+                    <p class="text-sm text-gray-400 max-w-md mt-2 leading-relaxed">
+                        Upload your reference photo on the left. The engine locks facial features using pixel-anchored inpainting + OpenPose control to prevent identity drift.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-4 mt-8 w-full max-w-md text-left">
+                        <div class="bg-gray-900/60 p-3.5 rounded-xl border border-gray-800">
+                            <span class="text-xs text-indigo-400 font-mono">0.8757 SIM</span>
+                            <p class="text-xs text-gray-300 font-medium mt-1">Cosine Face Match</p>
+                        </div>
+                        <div class="bg-gray-900/60 p-3.5 rounded-xl border border-gray-800">
+                            <span class="text-xs text-purple-400 font-mono">12 STEPS</span>
+                            <p class="text-xs text-gray-300 font-medium mt-1">SDXL Lightning</p>
+                        </div>
+                        <div class="bg-gray-900/60 p-3.5 rounded-xl border border-gray-800">
+                            <span class="text-xs text-pink-400 font-mono">OPENPOSE</span>
+                            <p class="text-xs text-gray-300 font-medium mt-1">Controlled Pose</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading-state" class="glass-panel rounded-2xl p-12 text-center shadow-xl border border-indigo-500/20 hidden min-h-[560px] flex flex-col items-center justify-center">
+                    <div class="relative w-24 h-24 mb-6">
+                        <div class="w-24 h-24 rounded-full border-4 border-indigo-500/20 border-t-indigo-500 animate-spin"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-indigo-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-gray-200">Synthesizing Clone...</h3>
+                    <p id="loading-stage-text" class="text-sm text-indigo-300 font-medium mt-2">Initializing generation...</p>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full max-w-md bg-gray-800 rounded-full h-2.5 mt-6 overflow-hidden border border-gray-700">
+                        <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2.5 rounded-full transition-all duration-300" style="width: 5%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4">Estimated time: ~25-35 seconds on RTX 3050</p>
+                </div>
+
+                <!-- Result & Comparison State -->
+                <div id="result-state" class="glass-panel rounded-2xl p-6 shadow-2xl space-y-6 hidden">
+                    
+                    <!-- View Mode Toggle & Scorecard -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-800">
+                        <!-- View Toggles -->
+                        <div class="inline-flex rounded-xl bg-gray-900/80 p-1 border border-gray-800">
+                            <button id="view-mode-split" type="button" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow-sm transition-all">
+                                Split Slider
+                            </button>
+                            <button id="view-mode-side" type="button" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-gray-200 transition-all">
+                                Side-by-Side
+                            </button>
+                            <button id="view-mode-single" type="button" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-gray-200 transition-all">
+                                Result Only
+                            </button>
+                        </div>
+
+                        <!-- Metrics Badge -->
+                        <div class="flex items-center gap-3">
+                            <div id="similarity-badge" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Similarity: <strong id="similarity-score-text">0.8757</strong></span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono" id="duration-text">28.4s</span>
+                        </div>
+                    </div>
+
+                    <!-- 1. Split Slider View (Default) -->
+                    <div id="split-slider-view" class="relative">
+                        <div id="comparison-container" class="comparison-container max-h-[640px] bg-gray-950 border border-gray-800 cursor-ew-resize flex items-center justify-center">
+                            <!-- After Image (Underneath) -->
+                            <img id="comp-after-img" src="" alt="Generated Clone" class="w-full max-h-[640px] object-contain block mx-auto">
+                            
+                            <!-- Before Image (Clipped Overlay) -->
+                            <div id="comparison-wrapper" class="comparison-image-wrapper">
+                                <img id="comp-before-img" src="" alt="Original Reference" class="max-h-[640px] object-contain block">
+                            </div>
+
+                            <!-- Slider Handle -->
+                            <div id="comparison-handle" class="comparison-slider-handle">
+                                <svg class="w-4 h-4 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4" transform="rotate(90 12 12)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-[11px] text-gray-400 mt-2 px-1">
+                            <span>◀ Reference Photo</span>
+                            <span>Drag horizontal slider to compare</span>
+                            <span>Generated Clone ▶</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Side-by-Side View -->
+                    <div id="side-by-side-view" class="hidden grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <span class="text-xs text-gray-400 font-medium">Original Reference</span>
+                            <div class="rounded-xl overflow-hidden border border-gray-800 bg-gray-950">
+                                <img id="side-ref-img" src="" alt="Reference" class="w-full h-auto object-contain">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs text-indigo-400 font-medium">Generated Clone</span>
+                            <div class="rounded-xl overflow-hidden border border-indigo-500/30 bg-gray-950">
+                                <img id="side-res-img" src="" alt="Result" class="w-full h-auto object-contain">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Single Result View -->
+                    <div id="single-result-view" class="hidden text-center">
+                        <div class="rounded-xl overflow-hidden border border-gray-800 bg-gray-950 inline-block max-h-[640px]">
+                            <img id="result-img" src="" alt="Generated Clone" class="max-h-[640px] object-contain mx-auto">
+                        </div>
+                    </div>
+
+                    <!-- Action Bar -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-800">
+                        <div class="text-xs text-gray-400 font-mono">
+                            Seed: <span id="seed-result-text" class="text-gray-200">42891741</span> &bull; 832x1152 &bull; FP8 Lightning
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button id="copy-url-btn" type="button" class="px-4 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-semibold text-gray-200 transition-colors flex items-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                <span>Copy Link</span>
+                            </button>
+                            <button id="download-btn" type="button" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition-colors shadow-lg shadow-indigo-600/20 flex items-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                <span>Download HD</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800/60 py-6 text-center text-xs text-gray-500">
+        <p>CLONE-ME-AI &bull; Powered by ComfyUI, RealVisXL Lightning, InsightFace & ControlNet OpenPose</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

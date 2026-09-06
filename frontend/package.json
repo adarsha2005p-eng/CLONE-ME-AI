@@ -1,0 +1,19 @@
+{
+  "name": "clone-me-ai-frontend",
+  "version": "1.0.0",
+  "description": "Responsive Web Interface for CLONE-ME-AI",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000"
+  },
+  "keywords": [
+    "ai",
+    "comfyui",
+    "sdxl",
+    "face-id",
+    "identity-preservation"
+  ],
+  "author": "Adarsha Pradhan",
+  "license": "MIT"
+}

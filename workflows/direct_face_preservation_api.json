@@ -1,0 +1,146 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "RealVisXL_V5_Lightning_Native_FP8_00001_.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "inpaint_base_canvas.png",
+      "upload": "image"
+    }
+  },
+  "2m": {
+    "class_type": "LoadImageMask",
+    "inputs": {
+      "image": "inpaint_face_protect_mask.png",
+      "channel": "red",
+      "upload": "image"
+    }
+  },
+  "3": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "standing_3_4_openpose_target.png",
+      "upload": "image"
+    }
+  },
+  "ref": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_input.png",
+      "upload": "image"
+    }
+  },
+  "15": {
+    "class_type": "CLIPVisionLoader",
+    "inputs": {
+      "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+    }
+  },
+  "16": {
+    "class_type": "IPAdapterInsightFaceLoader",
+    "inputs": {
+      "provider": "CPU"
+    }
+  },
+  "4": {
+    "class_type": "IPAdapterUnifiedLoaderFaceID",
+    "inputs": {
+      "model": ["1", 0],
+      "preset": "FACEID PLUS V2",
+      "lora_strength": 0.85,
+      "provider": "CPU"
+    }
+  },
+  "5": {
+    "class_type": "IPAdapterFaceID",
+    "inputs": {
+      "model": ["4", 0],
+      "ipadapter": ["4", 1],
+      "image": ["ref", 0],
+      "clip_vision": ["15", 0],
+      "insightface": ["16", 0],
+      "weight": 0.70,
+      "weight_faceidv2": 0.85,
+      "weight_type": "linear",
+      "combine_embeds": "concat",
+      "start_at": 0.0,
+      "end_at": 1.0,
+      "embeds_scaling": "V only"
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["1", 1],
+      "text": "photorealistic photograph of the same woman from the original reference photograph, preserve the original facial identity exactly as closely as technically possible, natural recognizable face, accurate original eyes, original eyebrows, original nose, original lips, original cheeks, original jawline, natural skin texture, natural hair, realistic human anatomy, realistic body proportions, natural standing three-quarter pose, anatomically correct shoulders arms elbows wrists hands fingers torso waist hips legs knees and feet, wearing a white ribbed crop top and blue jeans, natural indoor lighting, realistic camera perspective, DSLR photography, subtle skin imperfections, physically plausible proportions"
+    }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["1", 1],
+      "text": "different person, changed identity, different face, altered eyes, altered eyebrows, altered nose, altered lips, altered jaw, beauty filter, plastic skin, artificial face, cartoon, anime, CGI, doll-like, bad anatomy, oversized arms, elongated arms, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, warped torso, distorted shoulders, distorted waist, deformed legs, bad feet, cropped feet, unrealistic proportions, blurry, low quality"
+    }
+  },
+  "17": {
+    "class_type": "ControlNetLoader",
+    "inputs": {
+      "control_net_name": "thibaud_xl_openpose.safetensors"
+    }
+  },
+  "18": {
+    "class_type": "ControlNetApplyAdvanced",
+    "inputs": {
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "control_net": ["17", 0],
+      "image": ["3", 0],
+      "strength": 0.70,
+      "start_percent": 0.0,
+      "end_percent": 1.0
+    }
+  },
+  "20": {
+    "class_type": "VAEEncodeForInpaint",
+    "inputs": {
+      "pixels": ["2", 0],
+      "vae": ["1", 2],
+      "mask": ["2m", 0],
+      "grow_mask_by": 4
+    }
+  },
+  "10": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["5", 0],
+      "positive": ["18", 0],
+      "negative": ["18", 1],
+      "latent_image": ["20", 0],
+      "seed": 42891741,
+      "control_after_generate": "fixed",
+      "steps": 12,
+      "cfg": 2.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "karras",
+      "denoise": 1.0
+    }
+  },
+  "11": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["10", 0],
+      "vae": ["1", 2]
+    }
+  },
+  "12": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["11", 0],
+      "filename_prefix": "CLONE_ME_RESULT"
+    }
+  }
+}

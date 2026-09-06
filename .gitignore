@@ -1,26 +1,52 @@
+# ComfyUI Engine & Portable Environment
+ComfyUI/
 python_embeded/
-ComfyUI/models/
-ComfyUI/output/
-ComfyUI/input/
-ComfyUI/temp/
-ComfyUI/user/
-ComfyUI/__pycache__/
-ComfyUI/custom_nodes/*/node_modules/
-ComfyUI/custom_nodes/*/__pycache__/
 workflow_backups/
 update/
 advanced/
+
+# Virtual Environments & Python Cache
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Application Data & Temporary Uploads
+backend/uploads/
+backend/outputs/
+*.log
+
+# Environment Variables & Secrets
+.env
+*.env
+.env.local
+
+# Node & Frontend
+node_modules/
+dist/
+.npm/
+
+# Model Weights & Checkpoints (Heavy Binaries)
 *.safetensors
 *.ckpt
 *.pth
 *.bin
 *.onnx
 *.pt
-*.png
+
+# Media & Generated Outputs
 *.jpg
 *.jpeg
 *.webp
 *.mp4
 *.zip
 *.7z
-.env
+*.png
+
+# Allow Repository Assets & Skeleton Templates
+!workflows/standing_3_4_openpose_target.png
+!frontend/assets/**
+
