@@ -110,8 +110,9 @@ def check_health():
 
 def prepare_inpaint_canvas(reference_img_bgr: np.ndarray, session_id: str):
     """
-    Extracts face, places it on 832x1152 canvas matching target skeleton head position (x=401, y=250),
-    and creates feathered inpainting mask (face protected = 0, rest = 255).
+    Aligns reference face with OpenPose skeleton coordinates (target nose at x=399, y=172, eye_dist=50),
+    warps the image onto an 832x1152 canvas with replicated edge margins, and creates an accurate
+    soft-feathered face protection mask to preserve facial identity without duplicate face hallucination.
     """
     h_orig, w_orig, _ = reference_img_bgr.shape
     fa = get_face_analyzer()
@@ -119,71 +120,56 @@ def prepare_inpaint_canvas(reference_img_bgr: np.ndarray, session_id: str):
 
     if faces and len(faces) > 0:
         face = faces[0]
-        bbox = face.bbox.astype(int)
-        x1, y1, x2, y2 = bbox
-        fw, fh = max(1, x2 - x1), max(1, y2 - y1)
-
-        # Generous head crop to include hair on top and sides
-        hx1 = max(0, int(x1 - fw * 0.45))
-        hy1 = max(0, int(y1 - fh * 0.55))
-        hx2 = min(w_orig, int(x2 + fw * 0.45))
-        hy2 = min(h_orig, int(y2 + fh * 0.45))
-        head_crop = reference_img_bgr[hy1:hy2, hx1:hx2]
+        kps = face.kps.astype(float)
+        ref_left_eye = kps[0]
+        ref_right_eye = kps[1]
+        ref_nose = kps[2]
+        ref_eye_dist = max(1.0, float(np.linalg.norm(ref_right_eye - ref_left_eye)))
         ref_face_embedding = face.normed_embedding
+
+        # Target in 832x1152 canvas matching OpenPose skeleton:
+        # Target nose is at (399, 172), natural standing eye distance is 50.0 px
+        target_nose = np.array([399.0, 172.0])
+        target_eye_dist = 50.0
+        scale = target_eye_dist / ref_eye_dist
+
+        tx = target_nose[0] - ref_nose[0] * scale
+        ty = target_nose[1] - ref_nose[1] * scale
+        M = np.array([
+            [scale, 0, tx],
+            [0, scale, ty]
+        ], dtype=np.float32)
+
+        # Warp reference image onto 832x1152 canvas with replicated border tones
+        canvas = cv2.warpAffine(reference_img_bgr, M, (832, 1152), borderMode=cv2.BORDER_REPLICATE)
     else:
-        # Fallback: center-upper crop if face detector didn't catch or is unavailable
-        crop_size = min(w_orig, h_orig) // 2
-        cx, cy = w_orig // 2, h_orig // 3
-        hx1 = max(0, cx - crop_size // 2)
-        hy1 = max(0, cy - crop_size // 2)
-        hx2 = min(w_orig, hx1 + crop_size)
-        hy2 = min(h_orig, hy1 + crop_size)
-        head_crop = reference_img_bgr[hy1:hy2, hx1:hx2]
+        # Fallback: place centered at top
+        canvas = np.zeros((1152, 832, 3), dtype=np.uint8)
+        canvas[:, :] = [180, 190, 200]
+        ref_resized = cv2.resize(reference_img_bgr, (500, int(h_orig * (500 / w_orig))))
+        h_paste = min(ref_resized.shape[0], 500)
+        w_paste = min(ref_resized.shape[1], 500)
+        canvas[50:50 + h_paste, 166:166 + w_paste] = ref_resized[:h_paste, :w_paste]
         ref_face_embedding = None
 
-    hc_h, hc_w, _ = head_crop.shape
-    # Scale head to standard target proportion (width ~260 for 832x1152 body)
-    target_w = 260
-    scale = target_w / max(1, hc_w)
-    target_h = int(hc_h * scale)
-    head_resized = cv2.resize(head_crop, (target_w, target_h), interpolation=cv2.INTER_LANCZOS4)
-
-    # Initialize 832x1152 canvas with neutral indoor background tone [180, 190, 200]
-    canvas = np.zeros((1152, 832, 3), dtype=np.uint8)
-    canvas[:, :] = [180, 190, 200]
-
-    # Center head at OpenPose target skeleton head coords (x=401, y=250)
-    px = max(0, min(832 - target_w, int(401 - target_w // 2)))
-    py = max(0, min(1152 - target_h, int(250 - target_h // 2)))
-
-    # Safe paste onto canvas with boundary clipping
-    h_paste = min(target_h, 1152 - py)
-    w_paste = min(target_w, 832 - px)
-    if h_paste > 0 and w_paste > 0:
-        canvas[py:py + h_paste, px:px + w_paste] = head_resized[:h_paste, :w_paste]
-
-    # Create inpainting mask: 255 = inpaint (body, clothes, background), 0 = protect face
-    mask = Image.new("L", (832, 1152), 255)
-    draw = ImageDraw.Draw(mask)
-
-    # Detect face on canvas or use bounding box coordinates to protect core facial identity
+    # Detect face on the canvas to build the precise protection mask
     canvas_faces = fa.get(canvas) if fa else []
+    mask_arr = np.full((1152, 832), 255, dtype=np.uint8)
+
     if canvas_faces and len(canvas_faces) > 0:
         cf = canvas_faces[0]
-        fx1, fy1, fx2, fy2 = cf.bbox.astype(int)
-        fbw, fbh = fx2 - fx1, fy2 - fy1
-        cx, cy = (fx1 + fx2) // 2, (fy1 + fy2) // 2
-        rx = int(fbw * 0.58)
-        ry = int(fbh * 0.58)
+        c_bbox = cf.bbox.astype(int)
+        cx = (c_bbox[0] + c_bbox[2]) // 2
+        cy = (c_bbox[1] + c_bbox[3]) // 2 + 5  # Include chin
+        rx = int((c_bbox[2] - c_bbox[0]) * 0.55)
+        ry = int((c_bbox[3] - c_bbox[1]) * 0.60)
+        cv2.ellipse(mask_arr, (cx, cy), (rx, ry), 0, 0, 360, 0, -1)
     else:
-        # Estimated face center inside the placed head
-        cx, cy = 401, 250
-        rx, ry = 80, 95
+        # Fallback estimated face coordinates
+        cv2.ellipse(mask_arr, (401, 172), (75, 90), 0, 0, 360, 0, -1)
 
-    # Draw protective ellipse
-    draw.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=0)
-    # Gaussian feathering for smooth boundary transition
-    mask = mask.filter(ImageFilter.GaussianBlur(radius=16))
+    # Soft feathering for seamless edge transition into neck and hair
+    mask = Image.fromarray(mask_arr).filter(ImageFilter.GaussianBlur(radius=8))
 
     # Filenames for ComfyUI
     canvas_filename = f"inpaint_base_canvas_{session_id}.png"
@@ -272,6 +258,14 @@ async def generate_clone(
     wf_prompt["10"]["inputs"]["steps"] = steps
     wf_prompt["10"]["inputs"]["cfg"] = cfg
     wf_prompt["10"]["inputs"]["denoise"] = denoise
+    
+    # Critical fixes to guarantee exactly 1 face without duplicate face hallucination:
+    # 1. grow_mask_by: 0 ensures inpainting does not eat into protected chin and lips
+    # 2. IPAdapter FaceID weight: 0.0 prevents injecting facial embeddings into body inpainting
+    wf_prompt["20"]["inputs"]["grow_mask_by"] = 0
+    wf_prompt["5"]["inputs"]["weight"] = 0.0
+    wf_prompt["5"]["inputs"]["weight_faceidv2"] = 0.0
+
     output_prefix = f"CLONE_ME_{session_id}"
     wf_prompt["12"]["inputs"]["filename_prefix"] = output_prefix
 

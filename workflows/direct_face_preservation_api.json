@@ -63,8 +63,8 @@
       "image": ["ref", 0],
       "clip_vision": ["15", 0],
       "insightface": ["16", 0],
-      "weight": 0.70,
-      "weight_faceidv2": 0.85,
+      "weight": 0.0,
+      "weight_faceidv2": 0.0,
       "weight_type": "linear",
       "combine_embeds": "concat",
       "start_at": 0.0,
@@ -76,14 +76,14 @@
     "class_type": "CLIPTextEncode",
     "inputs": {
       "clip": ["1", 1],
-      "text": "photorealistic photograph of the same woman from the original reference photograph, preserve the original facial identity exactly as closely as technically possible, natural recognizable face, accurate original eyes, original eyebrows, original nose, original lips, original cheeks, original jawline, natural skin texture, natural hair, realistic human anatomy, realistic body proportions, natural standing three-quarter pose, anatomically correct shoulders arms elbows wrists hands fingers torso waist hips legs knees and feet, wearing a white ribbed crop top and blue jeans, natural indoor lighting, realistic camera perspective, DSLR photography, subtle skin imperfections, physically plausible proportions"
+      "text": "photorealistic full-body photograph of the same woman, standing in a natural three-quarter pose, wearing a white ribbed crop top and blue jeans, natural slender body proportions, natural neck and shoulders seamlessly connecting to head, anatomically correct arms, hands, waist, hips, legs and feet, natural indoor lighting, DSLR photography"
     }
   },
   "7": {
     "class_type": "CLIPTextEncode",
     "inputs": {
       "clip": ["1", 1],
-      "text": "different person, changed identity, different face, altered eyes, altered eyebrows, altered nose, altered lips, altered jaw, beauty filter, plastic skin, artificial face, cartoon, anime, CGI, doll-like, bad anatomy, oversized arms, elongated arms, malformed hands, extra fingers, missing fingers, fused fingers, extra limbs, warped torso, distorted shoulders, distorted waist, deformed legs, bad feet, cropped feet, unrealistic proportions, blurry, low quality"
+      "text": "second head, duplicate face, two faces, extra face, overlapping faces, deformed body, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, blurry, low quality"
     }
   },
   "17": {
@@ -110,7 +110,7 @@
       "pixels": ["2", 0],
       "vae": ["1", 2],
       "mask": ["2m", 0],
-      "grow_mask_by": 4
+      "grow_mask_by": 0
     }
   },
   "10": {

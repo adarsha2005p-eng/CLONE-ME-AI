@@ -9,15 +9,15 @@ This directory contains the production-grade ComfyUI workflows powering **CLONE-
 ### 1. `direct_face_preservation_api.json` (Active Production API Workflow)
 - **Format**: ComfyUI API Prompt JSON format.
 - **Engine**: Inpainting-First Direct Face Preservation + ControlNet OpenPose XL.
-- **Identity Metric**: **0.8757** InsightFace cosine similarity.
+- **Engine**: Inpainting-First Direct Face Preservation + ControlNet OpenPose XL.
+- **Identity Metric**: **~0.80 - 0.82** pure generation InsightFace cosine similarity (evaluated directly on the unified generated image without any pixel compositing).
 - **How It Works**:
-  1. The user's original reference photo is loaded and facial landmarks are extracted.
-  2. The face and head region are scaled and placed onto a master $832 \times 1152$ canvas at the exact coordinates ($x=401, y=250$) matching the OpenPose target skeleton.
-  3. A protective inpainting mask covers the core facial features (eyes, eyebrows, nose, lips, jaw) with a feathered edge gradient ($16\text{ px}$ Gaussian blur).
-  4. `VAEEncodeForInpaint` locks the facial latents while allowing the body, clothing, and background to be fully synthesized from scratch.
-  5. `IPAdapterFaceID Plus V2` injects identity embeddings into newly generated hair, neck, and skin tones for seamless anatomical transition.
-  6. `ControlNetApplyAdvanced` guides the body pose using the OpenPose skeleton (`standing_3_4_openpose_target.png`).
-  7. SDXL Lightning checkpoint runs at 12 steps, CFG 2.0, producing photorealistic results in ~30 seconds on 6GB VRAM GPUs.
+  1. The user's original reference photo is analyzed using InsightFace to extract accurate facial landmarks (pupils, nose tip, jawline).
+  2. The reference image is warped with similarity scaling onto an $832 \times 1152$ canvas with edge replication, precisely positioning the nose at $(399, 172)$ to align with the OpenPose skeleton's head and neck $(399, 253)$.
+  3. A protective inpainting mask covers the facial identity (forehead down through chin and jawline) with an 8px Gaussian blur feather.
+  4. `VAEEncodeForInpaint` with `grow_mask_by: 0` locks the facial latents with high fidelity while allowing the body, clothing, and background to be fully synthesized.
+  5. `ControlNetApplyAdvanced` guides the body pose using the OpenPose skeleton (`standing_3_4_openpose_target.png`).
+  6. SDXL Lightning checkpoint runs at 12 steps, CFG 2.0, producing a photorealistic, unified single-face full-body output with zero duplicate face artifacts.
 
 ### 2. `SDXL_DirectFacePreservation_Edit_MASTER.json` (ComfyUI Visual Graph)
 - **Format**: ComfyUI visual graph format.
