@@ -6,29 +6,22 @@ This directory contains the production-grade ComfyUI workflows powering **CLONE-
 
 ## Workflows Overview
 
-### 1. `direct_face_preservation_api.json` (Active Production API Workflow)
+### 1. `clone_me_production_api.json` / `direct_face_preservation_api.json` (Active Production API Workflow)
 - **Format**: ComfyUI API Prompt JSON format.
-- **Engine**: Inpainting-First Direct Face Preservation + ControlNet OpenPose XL.
-- **Engine**: Inpainting-First Direct Face Preservation + ControlNet OpenPose XL.
-- **Identity Metric**: **~0.80 - 0.82** pure generation InsightFace cosine similarity (evaluated directly on the unified generated image without any pixel compositing).
+- **Engine**: IPAdapter FaceID Plus V2 + ControlNet OpenPose XL with EmptyLatent synthesis.
+- **Identity Metric**: **~0.70 - 0.76** pure generation InsightFace cosine similarity without pixel compositing.
 - **How It Works**:
-  1. The user's original reference photo is analyzed using InsightFace to extract accurate facial landmarks (pupils, nose tip, jawline).
-  2. The reference image is warped with similarity scaling onto an $832 \times 1152$ canvas with edge replication, precisely positioning the nose at $(399, 172)$ to align with the OpenPose skeleton's head and neck $(399, 253)$.
-  3. A protective inpainting mask covers the facial identity (forehead down through chin and jawline) with an 8px Gaussian blur feather.
-  4. `VAEEncodeForInpaint` with `grow_mask_by: 0` locks the facial latents with high fidelity while allowing the body, clothing, and background to be fully synthesized.
-  5. `ControlNetApplyAdvanced` guides the body pose using the OpenPose skeleton (`standing_3_4_openpose_target.png`).
-  6. SDXL Lightning checkpoint runs at 12 steps, CFG 2.0, producing a photorealistic, unified single-face full-body output with zero duplicate face artifacts.
+  1. The user's uploaded reference photo is passed directly to IPAdapter FaceID Plus V2 (`weight: 1.25`, `weight_faceidv2: 1.50`, LoRA strength `0.85`) with InsightFace `buffalo_l` and CLIP Vision (`CLIP-ViT-H-14-laion2B-s32B-b79K`).
+  2. The full human body pose is guided by `ControlNetApplyAdvanced` (strength `0.75`) using `standing_3_4_openpose_target.png`.
+  3. `EmptyLatentImage` ($832 \times 1152$) synthesizes the body, clothing, and background naturally from scratch, preventing duplicate face hallucinations and mask seam distortions.
+  4. SDXL Lightning checkpoint (`RealVisXL_V5_Lightning_Native_FP8_00001_.safetensors`) samples via `dpmpp_sde` / `sgm_uniform` at 8 steps, CFG 1.8, producing realistic anatomy, single head placement, and exact clothing styling.
 
-### 2. `SDXL_DirectFacePreservation_Edit_MASTER.json` (ComfyUI Visual Graph)
+### 2. `FINAL_IDENTITY_POSE_WORKFLOW.json` (ComfyUI Visual Graph)
 - **Format**: ComfyUI visual graph format.
-- **Usage**: Drag and drop directly into the ComfyUI web UI (`http://127.0.0.1:8188`) to view and modify node connections visually.
+- **Usage**: Drag and drop directly into the ComfyUI web UI (`http://127.0.0.1:8188`) to view and execute the production visual graph.
 
-### 3. `SDXL_MultiReference_Realistic_Identity_MASTER.json`
-- **Format**: ComfyUI visual graph format for multi-reference face embedding fusion.
-- **Usage**: Experimental/advanced multi-angle identity conditioning.
-
-### 4. `standing_3_4_openpose_target.png`
-- The standard $832 \times 1152$ OpenPose skeleton template for natural 3/4 standing poses.
+### 3. `standing_3_4_openpose_target.png`
+- The verified $832 \times 1152$ OpenPose skeleton template for natural 3/4 standing poses.
 
 ---
 

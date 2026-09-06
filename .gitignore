@@ -50,3 +50,7 @@ dist/
 !workflows/standing_3_4_openpose_target.png
 !frontend/assets/**
 
+# Local experiment/validation logs & backups
+*.broken_backup
+*.backup
+RESTORED_PIPELINE_VALIDATION.json
